@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xin Lỗi Nhiều</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a0010;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .scene {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 500px;
+      height: 500px;
+    }
+
+    .heart-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 1.2s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.1); }
+    }
+
+    .heart-svg {
+      width: 320px;
+      height: 300px;
+      filter: drop-shadow(0 0 22px rgba(220,50,80,0.6));
+    }
+
+    .heart-text {
+      position: absolute;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .heart-text p {
+      font-family: 'Dancing Script', cursive;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      text-shadow: 0 2px 12px rgba(120,0,30,0.7);
+      letter-spacing: 1px;
+    }
+
+    .heart-text .small {
+      font-family: 'Dancing Script', cursive;
+      font-size: 18px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.88);
+      margin-top: 6px;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: float-up var(--dur) ease-in infinite;
+      animation-delay: var(--delay);
+      z-index: 1;
+    }
+
+    @keyframes float-up {
+      0%   { opacity: 0;   transform: translateY(0) scale(0.5); }
+      20%  { opacity: 0.9; }
+      80%  { opacity: 0.5; }
+      100% { opacity: 0;   transform: translateY(-200px) scale(1.3) rotate(30deg); }
+    }
+
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(220, 50, 80, 0.4);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0;
+      animation: expand 2.4s ease-out infinite;
+      width: 320px;
+      height: 320px;
+      z-index: 0;
+    }
+
+    @keyframes expand {
+      0%   { transform: translate(-50%,-50%) scale(0.2); opacity: 0.8; }
+      100% { transform: translate(-50%,-50%) scale(2.2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+
+  <div class="ring" style="animation-delay: 0s;"></div>
+  <div class="ring" style="animation-delay: 0.8s;"></div>
+  <div class="ring" style="animation-delay: 1.6s;"></div>
+
+  <div class="heart-wrap">
+    <svg class="heart-svg" viewBox="0 0 200 185" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ff6b8a"/>
+          <stop offset="100%" stop-color="#c0143c"/>
+        </linearGradient>
+        <linearGradient id="shine" x1="20%" y1="0%" x2="80%" y2="60%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+      </defs>
+      <path d="M100 170
+        C60 145, 10 115, 10 68
+        C10 40, 30 20, 55 20
+        C70 20, 85 28, 100 42
+        C115 28, 130 20, 145 20
+        C170 20, 190 40, 190 68
+        C190 115, 140 145, 100 170Z"
+        fill="url(#hg)" stroke="rgba(160,0,40,0.4)" stroke-width="1"/>
+      <path d="M55 35 C45 38, 28 52, 25 68"
+        fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M100 170
+        C60 145, 10 115, 10 68
+        C10 40, 30 20, 55 20
+        C70 20, 85 28, 100 42
+        C115 28, 130 20, 145 20
+        C170 20, 190 40, 190 68
+        C190 115, 140 145, 100 170Z"
+        fill="url(#shine)"/>
+    </svg>
+
+    <div class="heart-text">
+      <p>Xin lỗi Đồng Khánh Linh</p>
+      <p class="small">❤️/p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const scene = document.getElementById('scene');
+  const colors = ['#ff6b8a','#ff4d6d','#ff85a1','#ffb3c1','#ff3355','#ffa0b4'];
+
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    const size = 6 + Math.random() * 10;
+    const x = 40 + Math.random() * 420;
+    const y = 100 + Math.random() * 300;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const dur = (2 + Math.random() * 2.5).toFixed(1) + 's';
+    const delay = (Math.random() * 3).toFixed(1) + 's';
+    el.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${x}px; top:${y}px;
+      background:${color};
+      --dur:${dur}; --delay:-${delay};
+    `;
+    scene.appendChild(el);
+  }
+</script>
+
+</body>
+</html>
